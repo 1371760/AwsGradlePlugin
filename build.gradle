@@ -1,5 +1,6 @@
 apply plugin: 'java'
 apply plugin: 'maven'
+apply plugin: 'signing'
 
 repositories {
     mavenCentral()
@@ -13,10 +14,72 @@ dependencies {
 group 'com.bzzzapp'
 version '0.1'
 
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from 'build/docs/javadoc'
+}
+
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allSource
+    classifier = 'sources'
+}
+
+artifacts {
+    archives jar
+
+    archives javadocJar
+    archives sourcesJar
+}
+
+
+signing {
+    sign configurations.archives
+}
+
 uploadArchives {
     repositories {
         mavenDeployer {
-            repository(url: uri('./localMavenRepo'))
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: sonatypeUsername, password: sonatypePassword)
+            }
+
+            pom.project {
+                name 'AwsGradlePlugin'
+                packaging 'jar'
+                description 'AwsGradlePlugin is a Gradle plugin for deploying to amazon aws'
+                url 'https://github.com/1371760/AwsGradlePlugin'
+
+                scm {
+                    url 'scm:git@github.com:1371760/AwsGradlePlugin.git'
+                    connection 'scm:git@github.com:1371760/AwsGradlePlugin.git'
+                    developerConnection 'scm:git@github.com:1371760/AwsGradlePlugin.git'
+                }
+
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        distribution 'repo'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id '1371760'
+                        name 'Denis X'
+                    }
+                }
+            }
         }
     }
 }
+
+//uploadArchives {
+//    repositories {
+//        mavenDeployer {
+//            repository(url: uri('./localMavenRepo'))
+//        }
+//    }
+//}
