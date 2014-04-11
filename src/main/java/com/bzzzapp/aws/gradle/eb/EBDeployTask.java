@@ -19,9 +19,9 @@ public class EBDeployTask extends DefaultTask {
                 awsebConfig.getApplicationName(),
                 awsebConfig.getEnvironmentName(),
                 awsebConfig.getBucketName(),
-                awsebConfig.getKeyPrefix(),
+                awsebConfig.getBucketFolder(),
                 awsebConfig.getVersionLabel(),
-                awsebConfig.getRootObject()
+                awsebConfig.getWarFilePath()
         );
         deployer.perform();
 

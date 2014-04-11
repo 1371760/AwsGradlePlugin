@@ -4,9 +4,6 @@ public class EBExtension {
 
     public static final String GRADLE_NAME = "awsEBConfig";
 
-    /**
-     * AWS Region
-     */
     private String awsRegion;
 
     public String getAwsRegion() {
@@ -17,9 +14,6 @@ public class EBExtension {
         this.awsRegion = awsRegion;
     }
 
-    /**
-     * Application Name
-     */
     private String applicationName;
 
     public String getApplicationName() {
@@ -30,9 +24,6 @@ public class EBExtension {
         this.applicationName = applicationName;
     }
 
-    /**
-     * Environment Name
-     */
     private String environmentName;
 
     public String getEnvironmentName() {
@@ -43,9 +34,6 @@ public class EBExtension {
         this.environmentName = environmentName;
     }
 
-    /**
-     * Bucket Name
-     */
     private String bucketName;
 
     public String getBucketName() {
@@ -56,17 +44,14 @@ public class EBExtension {
         this.bucketName = bucketName;
     }
 
-    /**
-     * Key Format
-     */
-    private String keyPrefix;
+    private String bucketFolder;
 
-    public String getKeyPrefix() {
-        return keyPrefix;
+    public String getBucketFolder() {
+        return bucketFolder;
     }
 
-    public void setKeyPrefix(String keyFormat) {
-        this.keyPrefix = keyFormat;
+    public void setBucketFolder(String keyFormat) {
+        this.bucketFolder = keyFormat;
     }
 
     private String versionLabel;
@@ -79,13 +64,13 @@ public class EBExtension {
         this.versionLabel = versionLabel;
     }
 
-    private String rootObject;
+    private String warFilePath;
 
-    public String getRootObject() {
-        return rootObject;
+    public String getWarFilePath() {
+        return warFilePath;
     }
 
-    public void setRootObject(String rootDirectory) {
-        this.rootObject = rootDirectory;
+    public void setWarFilePath(String warFilePath) {
+        this.warFilePath = warFilePath;
     }
 }

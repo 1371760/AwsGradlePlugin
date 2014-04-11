@@ -36,7 +36,7 @@ public class EBDeployer {
 
     private File localArchive;
 
-    private String keyPrefix;
+    private String bucketFolder;
 
     private String bucketName;
 
@@ -44,21 +44,19 @@ public class EBDeployer {
 
     private String objectKey;
 
-    private String s3ObjectPath;
-
     private String environmentName;
 
     public EBDeployer(String awsAccessKeyId,
                       String awsSecretSharedKey, String awsRegion,
                       String applicationName, String environmentName, String bucketName,
-                      String keyPrefix, String versionLabel, String rootObject) {
+                      String bucketFolder, String versionLabel, String rootObject) {
         this.awsAccessKeyId = awsAccessKeyId;
         this.awsSecretSharedKey = awsSecretSharedKey;
         this.awsRegion = awsRegion;
         this.applicationName = applicationName;
         this.environmentName = environmentName;
         this.bucketName = bucketName;
-        this.keyPrefix = keyPrefix;
+        this.bucketFolder = bucketFolder;
         this.versionLabel = versionLabel;
         this.rootObject = rootObject;
     }
@@ -123,10 +121,8 @@ public class EBDeployer {
     }
 
     private void uploadArchive() {
-        objectKey = formatPath("%s/%s-%s.war", keyPrefix, applicationName,
+        objectKey = formatPath("%s/%s", bucketFolder,
                 versionLabel);
-
-        s3ObjectPath = "s3://" + formatPath("%s/%s", bucketName, objectKey);
 
         s3.putObject(bucketName, objectKey, localArchive);
     }
