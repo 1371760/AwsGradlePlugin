@@ -1,0 +1,28 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.bzzzapp:aws-plugin:0.2'
+    }
+}
+
+apply plugin: 'aws-plugin'
+
+awsConfig {
+    awsAccessKeyId = 'your access key here'
+    awsSecretSharedKey = 'your access secret here'
+}
+
+awsS3Deploy {
+    awsS3Config {
+        bucketName = 'your bucket name here'
+        /**
+         * This is the folder you with to upload to s3, do not use the root folder of project, because it contains secure
+         * files like .git folder etc
+         */
+        pathToUpload = getProject().getRootDir().getPath() + '/S3WebSite'
+    }
+}
+
